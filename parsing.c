@@ -177,12 +177,10 @@ void check_ceil(char *s, t_data *cub){
 		ft_errorr("bad arguments");
 }
 
-void check_map(t_data *data)
+void check_map(t_data *data, int i)
 {
-	int i;
 	int j;
 
-	i = 0;
 	while (data->map_db[i])
 	{
 		j = 0;
@@ -190,13 +188,13 @@ void check_map(t_data *data)
 		{
 			if (data->map_db[i][j] == '0')
 			{
-				if (data->map_db[i][j + 1] == ' ')
+				if (data->map_db[i][j + 1] == ' ' || data->map_db[i][j + 1] == '\0')
 					ft_errorr("211");
-				if (data->map_db[i][j - 1] == ' ')
+				if (data->map_db[i][j - 1] == ' ' || data->map_db[i][j - 1] == '\0')
 					ft_errorr("213");
-				if (data->map_db[i] && data->map_db[i - 1][j] == ' ')
+				if ((data->map_db[i] && data->map_db[i - 1][j] == ' ') || data->map_db[i - 1][j] == '\0')
 					ft_errorr("215");
-				if (data->map_db[i] && data->map_db[i + 1][j] == ' ')
+				if ((data->map_db[i] && data->map_db[i + 1][j] == ' ') || data->map_db[i + 1][j] == '\0')
 					ft_errorr("217");
 			}
 			j++;
@@ -214,7 +212,8 @@ void check_news(t_data *data, int i)
 		j = 0;
 		while (data->map_db[i][j])
 		{
-			if (data->map_db[i][j] != '1' && data->map_db[i][j] != '0' && data->map_db[i][j] != 'N' && data->map_db[i][j] != 'E' && data->map_db[i][j] != 'W' && data->map_db[i][j] != 'S' && data->map_db[i][j] != ' ' && data->map_db[i][j] != '\n')
+			// printf("[%d]", data->map_db[i][j]);
+			if (data->map_db[i][j] != '1' && data->map_db[i][j] != '0' && data->map_db[i][j] != 'N' && data->map_db[i][j] != 'E' && data->map_db[i][j] != 'W' && data->map_db[i][j] != 'S' && data->map_db[i][j] != ' ' /*&& data->map_db[i][j] != '\n'*/)
 				ft_errorr("your map not valid");
 			j++;
 		}
@@ -226,7 +225,7 @@ void check_news(t_data *data, int i)
 int part_two(t_data *data, int i) // checking the map part in the 2d array
 {
 	check_news(data, i);
-	check_map(data);
+	check_map(data, i);
 	
 	return (0);
 }
