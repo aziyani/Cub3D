@@ -274,7 +274,9 @@ int part_one(s_main *m)
 			continue;
 		}
 		s = ft_split(m->map_db[i], ' ');
-		if (!ft_strncmp("NO", s[0], 3))
+		if (!s[0])
+			ft_errorr("invalid parametres!");
+		else if (!ft_strncmp("NO", s[0], 3))
 			check_path(s, ch.no);
 		else if (!ft_strncmp("SO", s[0], 3))
 			check_path(s, ch.so);
