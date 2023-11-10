@@ -1,26 +1,37 @@
-NAME = cub3d
+NAME = CUB3D
 
-CC = cc
+CC = gcc
 
-CFLAGS =#-fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 
-LIBS = libft/libft.a 
+GLFW = MLX42/build/_deps/glfw-build/src/libglfw3.a
 
-SRC = parsing.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+MLX = MLX42/build/libmlx42.a
 
-OBJ = ${SRC:.c=.o}
+LIBS = parsing/lbft/libft.a 
+
+FLG = -framework Cocoa -framework OpenGL -framework IOKit
 
 RM = rm -rf
 
+SRC =	main.c parsing/parsing.c \
+		parsing/gnl/get_next_line.c \
+		parsing/gnl/get_next_line_utils.c \
+
+OBJ = $(SRC:.c=.o)
+
 all : $(NAME)
 
-$(NAME) : $(OBJ)
-	$(CC) $(CFLAGS) $(SRC) $(LIBS) -o $(NAME)
+%.o : %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-clean :
+$(NAME) : $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBS) $(MLX) $(FLG) $(GLFW) -o $(NAME)
+
+clean:
 	$(RM) $(OBJ)
 
-fclean : clean
+fclean: clean
 	$(RM) $(NAME)
 
 re : fclean all
