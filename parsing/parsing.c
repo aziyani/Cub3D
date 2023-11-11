@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:40:51 by aziyani           #+#    #+#             */
-/*   Updated: 2023/11/11 11:48:31 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/11/11 16:08:48 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,37 @@ int	part_two(s_main *m, int i)
 		j++;
 		k++;
 	}
-	{
-		int	i;
-
-		i = 0;
-		while (m->map[i])
-		{
-			printf("%s\n", m->map[i]);
-			i++;
-		}
-	}
 	check_news(m, i);
 	check_map(m, i);
 	return (0);
 }
 
+void	ft_help(char **s, t_check ch, s_main *m, int i)
+{
+	if (!s[0])
+		ft_errorr("invalid parametres!");
+	else if (!ft_strncmp("NO", s[0], 3))
+		check_path(s, ch.no);
+	else if (!ft_strncmp("SO", s[0], 3))
+		check_path(s, ch.so);
+	else if (!ft_strncmp("WE", s[0], 3))
+		check_path(s, ch.we);
+	else if (!ft_strncmp("EA", s[0], 3))
+		check_path(s, ch.ea);
+	else if (!ft_strncmp("C", s[0], 2))
+		check_ceil(m->map_db[i], m);
+	else if (!ft_strncmp("F", s[0], 2))
+		check_floor(m->map_db[i], m);
+	else
+		ft_errorr("invalid parametres!");
+}
+
 int	part_one(s_main *m)
 {
-	int		i;
-	int		j;
 	char	**s;
 	t_check	ch;
+	int		i;
+	int		j;
 
 	ch = initialize_check();
 	i = 0;
@@ -67,45 +77,12 @@ int	part_one(s_main *m)
 			continue ;
 		}
 		s = ft_split(m->map_db[i], ' ');
-		if (!s[0])
-			ft_errorr("invalid parametres!");
-		else if (!ft_strncmp("NO", s[0], 3))
-			check_path(s, ch.no);
-		else if (!ft_strncmp("SO", s[0], 3))
-			check_path(s, ch.so);
-		else if (!ft_strncmp("WE", s[0], 3))
-			check_path(s, ch.we);
-		else if (!ft_strncmp("EA", s[0], 3))
-			check_path(s, ch.ea);
-		else if (!ft_strncmp("C", s[0], 2))
-			check_ceil(m->map_db[i], m);
-		else if (!ft_strncmp("F", s[0], 2))
-			check_floor(m->map_db[i], m);
-		else
-			ft_errorr("invalid parametres!");
+		ft_help(s, ch, m, i);
 		j++;
 		i++;
 	}
 	part_two(m, i);
 	return (0);
-}
-
-int	count_map_lines(int fd)
-{
-	int		i;
-	char	*line;
-
-	i = 0;
-	line = "chihaja"; // 3tiniha chihaja bach dkhel lwhile hit makhashach tkon NULL
-	while (line)
-	{
-		line = get_next_line(fd);
-		if (line)
-			i++;
-		free(line);
-	}
-	close(fd);
-	return (i);
 }
 
 void	read_map(int fd, s_main *m, char **av)

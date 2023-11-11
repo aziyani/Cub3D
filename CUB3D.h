@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:10:27 by aziyani           #+#    #+#             */
-/*   Updated: 2023/11/11 13:21:20 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/11/11 16:08:16 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int	check_floor(char *s, s_main *cub);
 int	skip_spaces(char *s, int index);
 int	check_path(char **s, int ch);
 int	check_path(char **s, int ch);
+int	count_map_lines(int fd);
 int	ft_count(char	*s1);
 
 char	*skip_s(char *s);
