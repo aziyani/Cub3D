@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   CUB3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:10:27 by aziyani           #+#    #+#             */
-/*   Updated: 2023/11/09 19:11:35 by aasselma         ###   ########.fr       */
+/*   Updated: 2023/11/11 13:21:20 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,25 @@ typedef struct s_check {
 
 
 int start_game(s_main *m);
+
+
+
+/*----------------------------PARCING-------------------------------*/
+void	check_ceil(char *s, s_main *cub);
+void	check_news(s_main *m, int i);
+void	check_map(s_main *m, int i);
+void	ft_errorr(char *s);
+
+
+int	check_floor(char *s, s_main *cub);
+int	skip_spaces(char *s, int index);
+int	check_path(char **s, int ch);
+int	check_path(char **s, int ch);
+int	ft_count(char	*s1);
+
+char	*skip_s(char *s);
+
+t_check	initialize_check(void);
+
 
 #endif
