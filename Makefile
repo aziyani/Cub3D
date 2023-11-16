@@ -14,7 +14,8 @@ FLG = -framework Cocoa -framework OpenGL -framework IOKit
 
 RM = rm -rf
 
-SRC =	main.c parsing/parsing.c parsing/parcing2.c parsing/check1.c parsing/check2.c parsing/chyata.c \
+SRC =	ray_casting.c mini_map.c main.c texture.c parsing/parsing.c parsing/parcing2.c \
+		parsing/check1.c parsing/check2.c parsing/chyata.c \
 		parsing/gnl/get_next_line.c \
 		parsing/gnl/get_next_line_utils.c \
 

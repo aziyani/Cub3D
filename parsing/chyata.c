@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:20:37 by aziyani           #+#    #+#             */
-/*   Updated: 2023/11/11 16:07:16 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/11/16 22:33:28 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_count(char	*s1)
 	return (count);
 }
 
-int	count_map_lines(int fd)
+int	count_map_lines(int fd, int *asmax)
 {
 	int		i;
 	char	*line;
@@ -38,10 +38,36 @@ int	count_map_lines(int fd)
 	while (line)
 	{
 		line = get_next_line(fd);
+		if ((int)ft_strlen(line) > (*asmax))
+			*asmax = ft_strlen(line);
 		if (line)
 			i++;
 		free(line);
 	}
 	close(fd);
 	return (i);
+}
+
+char	*ft_fku(char *x, int max)
+{
+	char	*dst;
+
+	dst = ft_calloc(max + 1, sizeof(1));
+	ft_memmove(dst, x, max);
+	free(x);
+	return (dst);
+}
+
+int	valid_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '1')
+			return (1);
+		i++;
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:40:51 by aziyani           #+#    #+#             */
-/*   Updated: 2023/11/11 16:08:48 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/11/16 22:39:24 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,22 @@ int	part_two(s_main *m, int i)
 	t = 0;
 	k = 0;
 	j = i;
-	while (m->map_db[j])
-	{
-		j++;
+	while (m->map_db[j++])
 		t++;
-	}
 	m->map = ft_calloc(sizeof(char *), t + 1);
 	j = i;
 	while (m->map_db[j])
 	{
-		m->map[k] = ft_strdup(m->map_db[j]);
+		if (valid_line(m->map_db[j]))
+		{
+			m->map[k] = ft_strdup(m->map_db[j]);
+			k++;
+		}
 		j++;
-		k++;
 	}
+	m->h = k;
 	check_news(m, i);
-	check_map(m, i);
+	check_map(m, i, 0);
 	return (0);
 }
 
@@ -87,23 +88,25 @@ int	part_one(s_main *m)
 
 void	read_map(int fd, s_main *m, char **av)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	int		asmax;
 
+	asmax = -1;
 	i = 0;
-	j = count_map_lines(fd);
+	j = count_map_lines(fd, &asmax);
 	m->map_db = (char **)malloc(sizeof(char *) * (j + 1));
 	if (!m->map_db)
 		ft_errorr("234");
 	fd = open(av[1], O_RDONLY);
 	while (i < j)
 	{
-		m->map_db[i] = get_next_line(fd);
+		m->map_db[i] = ft_fku(get_next_line(fd), asmax);
 		if (m->map_db[i][ft_strlen(m->map_db[i]) - 1] == '\n')
 			m->map_db[i][ft_strlen(m->map_db[i]) - 1] = '\0';
 		i++;
 	}
-	m->map_db[j] = NULL;
+	m->map_db[i] = NULL;
 }
 
 int	main(int ac, char **av)
@@ -115,7 +118,10 @@ int	main(int ac, char **av)
 	m = malloc(sizeof(s_main));
 	m->av = av[1];
 	fd = open(av[1], O_RDONLY);
+	if (fd == -1)
+		ft_errorr("map not valid");
+	printf("here\n");
 	read_map(fd, m, av);
 	part_one(m);
-	// start_game(m);
+	start_game(m);
 }
