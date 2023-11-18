@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:10:27 by aziyani           #+#    #+#             */
-/*   Updated: 2023/11/18 15:47:30 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/11/18 22:23:34 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	texture_image(s_main *m, t_point txt, t_point img, mlx_texture_t *txtr);
 void	check_map(s_main *m, int i, int j);
 void	check_ceil(char *s, s_main *cub);
 void	check_news(s_main *m, int i);
+void	txtrs_array(s_main	*m);
 void	ft_errorr(char *s);
 
 

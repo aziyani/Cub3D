@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 22:40:51 by aziyani           #+#    #+#             */
-/*   Updated: 2023/11/18 15:59:14 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/11/18 22:18:19 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,32 +113,6 @@ void	read_map(int fd, s_main *m, char **av)
 		free(line);
 	}
 	m->map_db[i] = NULL;
-}
-
-void	txtrs_array(s_main	*m)
-{
-	int	i;
-	int j;
-
-	i = 0;
-	j = 0;
-	m->arr = malloc(sizeof(char *) * 7);
-	while (m->map_db[i])
-	{
-		if (i < 6)
-		{
-			if (!ft_strncmp(m->map_db[i], "NO", 2) 
-				|| !ft_strncmp(m->map_db[i], "SO", 2) 
-			|| !ft_strncmp(m->map_db[i], "EA", 2) 
-			|| !ft_strncmp(m->map_db[i], "WE", 2)){
-				m->arr[j] = m->map_db[i];
-				puts(m->arr[j]);
-			}
-			j++;
-		}
-		i++;
-	}
-	m->arr[j] = NULL;
 }
 
 int	main(int ac, char **av)

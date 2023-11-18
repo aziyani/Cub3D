@@ -6,15 +6,14 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:45:47 by aziyani           #+#    #+#             */
-/*   Updated: 2023/11/18 15:58:06 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/11/18 22:19:08 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../CUB3D.h"
 
-void check_player(char c, int *count)
+void	check_player(char c, int *count)
 {
-	
 	if (ft_strchr("NSWE", c))
 		(*count)++;
 }
@@ -61,4 +60,28 @@ int	check_path(char **s, int ch)
 	if (fd == -1)
 		ft_errorr("57");
 	return (1);
+}
+
+void	txtrs_array(s_main	*m)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	m->arr = malloc(sizeof(char *) * 7);
+	while (m->map_db[i])
+	{
+		if (i < 6)
+		{
+			if (!ft_strncmp(m->map_db[i], "NO", 2) 
+				|| !ft_strncmp(m->map_db[i], "SO", 2) 
+				|| !ft_strncmp(m->map_db[i], "EA", 2) 
+				|| !ft_strncmp(m->map_db[i], "WE", 2))
+				m->arr[j] = m->map_db[i];
+			j++;
+		}
+		i++;
+	}
+	m->arr[j] = NULL;
 }
