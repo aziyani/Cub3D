@@ -6,16 +6,25 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:45:47 by aziyani           #+#    #+#             */
-/*   Updated: 2023/11/11 11:53:29 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/11/18 15:58:06 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../CUB3D.h"
 
+void check_player(char c, int *count)
+{
+	
+	if (ft_strchr("NSWE", c))
+		(*count)++;
+}
+
 void	check_news(s_main *m, int i)
 {
 	int	j;
+	int	count;
 
+	count = 0;
 	while (m->map_db[i])
 	{
 		j = 0;
@@ -26,10 +35,13 @@ void	check_news(s_main *m, int i)
 					&& m->map_db[i][j] != 'W' && m->map_db[i][j] != 'S'
 						&& m->map_db[i][j] != ' ')
 				ft_errorr("your map not valid");
+			check_player(m->map_db[i][j], &count);
 			j++;
 		}
 		i++;
 	}
+	if (count != 1)
+		ft_errorr("your map not valid");
 }
 
 int	check_path(char **s, int ch)

@@ -3,58 +3,70 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/19 19:45:15 by aziyani           #+#    #+#             */
-/*   Updated: 2022/12/12 13:17:32 by aziyani          ###   ########.fr       */
+/*   Created: 2022/11/03 22:34:47 by aasselma          #+#    #+#             */
+/*   Updated: 2022/11/24 22:13:51 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char	*next_line(char	*saver, int fd)
+int	check_str(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_read(int fd, char *str)
 {
 	char	*buffer;
 	int		i;
+	int		r;
 
+	r = 0;
+	i = 0;
 	buffer = malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-		return (0);
-	i = 1;
-	while (i != 0 && !(ft_strchr(saver, '\n')))
+	while (1)
 	{
-		i = read(fd, buffer, BUFFER_SIZE);
-		if (i < 0)
+		r = read(fd, buffer, BUFFER_SIZE);
+		if (r < 0)
 		{
-			free(saver);
 			free(buffer);
-			saver = 0;
-			return (0);
+			if (str)
+				free(str);
+			return (NULL);
 		}
-		buffer[i] = '\0';
-		saver = ft_strjoin(saver, buffer);
+		buffer[r] = '\0';
+		str = ft_strjoin(str, buffer);
+		if ((check_str(buffer) == 1) || (r == 0))
+			break ;
 	}
 	free(buffer);
-	return (saver);
+	return (str);
 }
 
 char	*get_next_line(int fd)
 {
+	static char	*str;
 	char		*line;
-	static char	*saver;
+	int			len;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	len = 0;
+	if (fd < 0)
 		return (0);
-	saver = next_line(saver, fd);
-	if (!saver)
-		return (0);
-	if (saver[0] == '\0')
-	{
-		free(saver);
-		saver = NULL;
+	str = ft_read(fd, str);
+	if (!(str))
 		return (NULL);
-	}
-	line = cline(saver);
-	saver = bowl(saver);
+	line = ft_getline(str, &len);
+	str = ft_getafterline(str, len);
 	return (line);
 }

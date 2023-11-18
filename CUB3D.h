@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 16:10:27 by aziyani           #+#    #+#             */
-/*   Updated: 2023/11/16 22:39:37 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/11/18 15:47:30 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@
 # include <stdio.h>
 #include <stdbool.h>
 
-#define CUB_SIZE 30
+#define CUB_SIZE 20
 #define WIDTH 1080
 #define HEIGH 900
-#define MIN 2
+#define MIN 3
+#define DIC 5
 #define W_COLOR 0x960F18FF
 #define G_COLOR 0XB9B3B3FF
 #define P_COLOR 0x114E61FF
@@ -44,11 +45,13 @@ typedef struct s_point
 
 typedef struct
 {
-	char			**map_db;
-	char			**map;
-	char			*av;
+	int				is_vertcl;
 	int				sky[3];
 	int				floor[3];
+	char			**map_db;
+	char			**map;
+	char			**arr;
+	char			*av;
 	int				w;
 	int				h;
 	float			wall_h;
@@ -80,29 +83,29 @@ typedef struct s_check {
 }		t_check;
 
 
-int				start_game(s_main *m);
-void			ray_casting__(s_main *m, float pov);
-void			ray_casting(s_main *m, float pov);
-void			draw_line(s_main *m, float x2, float y2);
-void			mini_map(s_main *m);
-
-void			texture_image(s_main *m, t_point txt, t_point img, mlx_texture_t *txtr);
+int		start_game(s_main *m);
+void	horz_raycasting(s_main *m, float pov);
+void	vtcl_raycasting(s_main *m, float pov);
+void	draw_player(float x, float y, mlx_image_t *img);
+void	mini_map(s_main *m);
+void	texture_image(s_main *m, t_point txt, t_point img, mlx_texture_t *txtr);
 
 /*----------------------------PARCING-------------------------------*/
+void	check_map(s_main *m, int i, int j);
 void	check_ceil(char *s, s_main *cub);
 void	check_news(s_main *m, int i);
-void	check_map(s_main *m, int i, int j);
 void	ft_errorr(char *s);
 
-int	count_map_lines(int fd, int *asmax);
+
 int	check_floor(char *s, s_main *cub);
 int	skip_spaces(char *s, int index);
 int	check_path(char **s, int ch);
 int	check_path(char **s, int ch);
+int	is_valid_line(char *line);
+int	count_map_lines(int fd);
 int	valid_line(char *line);
 int	ft_count(char	*s1);
 
-char *ft_fku(char *x, int max);
 char	*skip_s(char *s);
 
 t_check	initialize_check(void);

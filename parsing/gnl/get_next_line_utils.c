@@ -3,118 +3,121 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: aasselma <aasselma@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/19 19:46:13 by aziyani           #+#    #+#             */
-/*   Updated: 2022/12/12 12:46:54 by aziyani          ###   ########.fr       */
+/*   Created: 2022/11/16 02:27:13 by aasselma          #+#    #+#             */
+/*   Updated: 2022/11/22 23:51:42 by aasselma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(char *s)
-{
-	size_t	i;
-
-	if (!(s))
-		return (0);
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-char	*cline(char *s)
-{
-	char	*cline;
-	int		i;
-	int		j;
-
-	j = 0;
-	while (s[j] != '\n' && s[j] != '\0')
-		j++;
-	if (s[j] == '\n')
-		j++;
-	cline = malloc(j + 1);
-	if (!cline)
-		return (0);
-	i = 0;
-	while (i < j && s[i])
-	{
-		cline[i] = s[i];
-		i++;
-	}
-	cline[i] = '\0';
-	return (cline);
-}
-
-char	*bowl(char *s)
-{
-	int		i;
-	int		j;
-	char	*rest;
-
-	if (!s)
-		return (0);
-	i = 0;
-	if (!*s)
-		return (NULL);
-	while (s[i] && s[i] != '\n')
-		i++;
-	if (s[i] == '\n')
-		i++;
-	j = 0;
-	rest = (char *)malloc((ft_strlen(s) - i + 1));
-	if (!rest)
-		return (0);
-	while (s[i])
-		rest[j++] = s[i++];
-	rest[j] = '\0';
-	free(s);
-	return (rest);
-}
-
-int	ft_strchr(char *s, int c)
+int	ft_strlen(char *string)
 {
 	int	i;
 
 	i = 0;
-	if (s)
+	if (!(string))
+		return (0);
+	while (string[i])
+		i++;
+	return (i);
+}
+
+int	ft_countline(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0')
 	{
-		while (s[i])
+		if (str[i] == '\n')
 		{
-			if (s[i] == c)
-				return (1);
 			i++;
+			break ;
 		}
+		i++;
 	}
-	return (0);
+	return (i);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
 {
-	size_t	i;
-	size_t	j;
-	char	*s;
+	char	*p;
+	size_t	x;
 
-	if (!(s1))
+	x = 0;
+	if (!s1 && !s2)
+		return (NULL);
+	p = malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
+	if (s1)
 	{
-		s1 = malloc(1);
-		*s1 = '\0';
+		while (s1[x])
+		{
+			p[x] = s1[x];
+			x++;
+		}
 	}
-	s = malloc((ft_strlen(s1) + ft_strlen(s2)) + 1);
-	if (!s)
-		return (0);
-	i = 0;
-	while (s1[i])
+	x = 0;
+	while (s2[x])
 	{
-		s[i] = s1[i];
-		i++;
+		p[ft_strlen(s1) + x] = s2[x];
+		x++;
 	}
-	j = 0;
-	while (s2[j])
-		s[i++] = s2[j++];
-	s[i] = '\0';
+	p[ft_strlen(s1) + ft_strlen(s2)] = '\0';
 	free(s1);
-	return (s);
+	return (p);
+}
+
+char	*ft_getline(char *str, int *len)
+{
+	char	*line;
+
+	line = malloc(ft_countline(str) + 1);
+	while (str[*len])
+	{
+		line[*len] = str[*len];
+		if (str[*len] == '\n')
+		{
+			*len += 1;
+			break ;
+		}
+		*len += 1;
+	}
+	if (*len == 0 && str[*len] == '\0')
+	{
+		free(line);
+		return (NULL);
+	}
+	line[*len] = '\0';
+	while (str[*len] != '\0')
+		*len += 1;
+	return (line);
+}
+
+char	*ft_getafterline(char *str, int len)
+{
+	char	*p;
+	int		i;
+	int		k;
+
+	i = 0;
+	k = 0;
+	if (ft_strlen(str) == 0)
+	{
+		if (str)
+			free(str);
+		return (NULL);
+	}
+	p = malloc(len + 1);
+	i = ft_countline(str);
+	while (str[i] != '\0')
+	{
+		p[k] = str[i];
+		i++;
+		k++;
+	}
+	p[k] = '\0';
+	free(str);
+	return (p);
 }

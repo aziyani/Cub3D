@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 11:40:24 by aziyani           #+#    #+#             */
-/*   Updated: 2023/11/16 22:44:09 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/11/18 12:53:12 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@ void	check_map(s_main *m, int i, int j)
 			{
 				if (m->map_db[i][j + 1] == ' ' || m->map_db[i][j + 1] == '\0')
 					ft_errorr("211");
-				if (m->map_db[i][j - 1] == ' ' || m->map_db[i][j - 1] == '\0')
+				if (j == 0 || m->map_db[i][j - 1] == ' '
+					|| m->map_db[i][j - 1] == '\0')
 					ft_errorr("213");
-				if (m->map_db[i] && (!ft_strlen(m->map_db[i - 1]) 
-						|| (m->map_db[i - 1][j] == ' ') 
-					|| m->map_db[i - 1][j] == '\0'))
+				if (i == 0 || !m->map_db[i - 1] || ft_strlen(m->map_db[i - 1]) 
+					< (unsigned long)j || m->map_db[i - 1][j] == ' ' 
+				|| m->map_db[i - 1][j] == '\0')
 					ft_errorr("215");
-				if (m->map_db[i] && (!ft_strlen(m->map_db[i + 1]) 
-						|| m->map_db[i + 1][j] == ' ' 
-					|| m->map_db[i + 1][j] == '\0'))
+				if (!m->map_db[i + 1] || ft_strlen(m->map_db[i + 1]) 
+					< (unsigned long)j || m->map_db[i + 1][j] == ' ' 
+				|| m->map_db[i + 1][j] == '\0')
 					ft_errorr("217");
 			}
 			j++;

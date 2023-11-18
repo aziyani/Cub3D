@@ -6,7 +6,7 @@
 /*   By: aziyani <aziyani@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:20:37 by aziyani           #+#    #+#             */
-/*   Updated: 2023/11/16 22:33:28 by aziyani          ###   ########.fr       */
+/*   Updated: 2023/11/18 15:17:41 by aziyani          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,36 +28,6 @@ int	ft_count(char	*s1)
 	return (count);
 }
 
-int	count_map_lines(int fd, int *asmax)
-{
-	int		i;
-	char	*line;
-
-	i = 0;
-	line = "chihaja";
-	while (line)
-	{
-		line = get_next_line(fd);
-		if ((int)ft_strlen(line) > (*asmax))
-			*asmax = ft_strlen(line);
-		if (line)
-			i++;
-		free(line);
-	}
-	close(fd);
-	return (i);
-}
-
-char	*ft_fku(char *x, int max)
-{
-	char	*dst;
-
-	dst = ft_calloc(max + 1, sizeof(1));
-	ft_memmove(dst, x, max);
-	free(x);
-	return (dst);
-}
-
 int	valid_line(char *line)
 {
 	int	i;
@@ -70,4 +40,38 @@ int	valid_line(char *line)
 		i++;
 	}
 	return (0);
+}
+
+int	is_valid_line(char *line)
+{
+	int	i;
+	int	v;
+
+	i = 0;
+	v = 0;
+	while (line[i])
+	{
+		if (!(line[i] == '\n' || line[i] == ' ' || line[i] == '\t'))
+			v++;
+		i++;
+	}
+	return (v);
+}
+
+int	count_map_lines(int fd)
+{
+	int		i;
+	char	*line;
+
+	i = 0;
+	line = "full";
+	while (line)
+	{
+		line = get_next_line(fd);
+		if (line && is_valid_line(line))
+			i++;
+		free(line);
+	}
+	close (fd);
+	return (i);
 }
